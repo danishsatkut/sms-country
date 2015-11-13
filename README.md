@@ -1,38 +1,61 @@
 # Smscountry
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/smscountry`. To experiment with that code, run `bin/console` for an interactive prompt.
+smscountry gem is useful for sending sms with Ruby on Rails or any Ruby Application.
 
-TODO: Delete this and the text above, and describe your gem
+You need to create an account with the http://www.smscountry.com in order to send sms using this Gem. 
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-```ruby
+```
 gem 'smscountry'
 ```
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 Or install it yourself as:
 
     $ gem install smscountry
 
 ## Usage
+First create an instance of the Services class using the below code and access the instance methods
 
-TODO: Write usage instructions here
+	smsobj = Smscountry::Services.new("YourSmsCoountryUserName", "YourSmsCountryPassword", "SenderID") #SenderID is optional.
+#To Send SMS:
+	smsobj.sendsms("Your Message","Mobile Nums as Comma Separated String", meesage_type="N","Y")
+#To Check Your Account Balance
+	smsobj.check_account_balance
+#To Get SMS Reports
+	smsobj.get_bulk_reports(fromdate,todate) #Dates should be in "DD/MM/YYYY". You can access the reports of at max 7 days at once.
+#To Schedule SMS
+	smsobj.schedule_bulk_message(message,mobile_nums,meesage_type,req_delivery_report,interval,schedulerName,scheduledDateTime,systemcurrenttime)
+Example:
 
-## Development
+	smsobj.schedule_bulk_message("Sample Msg","919848022338",N","Y",0,"Festiva lWishes","DD/MM/YYYY","DD/MM/YYYY HH:MM AM/PM") # Mobile Nums in comma separated string.
+#View a Scheduled SMS
+	smsobj.view_single_scheduled_sms(reminder_id) # You will get a reminder ID when you schedule an SMS.reminder_id is an Integer.
+Example:
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+	smsobj.view_single_scheduled_sms(123456)
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+#View All Scheduled SMS
+You can view all the Scheduled SMSes.
+	smsobj.view_all_scheduled_sms()
+
+#To Delete a Scheduled SMS
+	smsobj.delete_scheduled_sms(reminder_id) # You will get a reminder ID when you schedule an SMS.reminder_id is an Integer.
+Example:
+
+	smsobj.delete_scheduled_sms(123456)
+
+
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/smscountry. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/sriram15690/smscountry. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License
